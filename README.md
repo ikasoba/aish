@@ -43,6 +43,8 @@ null
 null
 ```
 
+# API Reference
+
 ## Command#exec(): null
 The `exec` method of the command outputs standard output and standard error as is and returns `null`.
 
@@ -50,3 +52,47 @@ The `exec` method of the command outputs standard output and standard error as i
 Command's `read` method is used to retrieve stdout and stderr.
 
 Only in case of an error, the standard error is returned.
+
+## FakeModule:import(path: str): obj
+
+- This feature is experimental.
+
+This feature can be used to load external aiscript code.
+
+As a precaution, some features such as namespaces will not be available.
+
+This is because aish internally executes the contents of the code as a function.
+
+Module loading is performed according to the following rules
+
+- If the `path` starts with `/`, then
+
+  Load from `<home>/.aish/`.
+
+- Otherwise.
+
+  Import from the same hierarchy as the running script file.
+
+```js
+// ./hoge.is
+
+@add(x, y) {
+  return x + y
+}
+
+return {
+  add: add
+}
+```
+
+```js
+let Hoge = FakeModule:import("./hoge.is")
+
+<: Hoge.add(1, 2)
+```
+
+# .aishrc
+
+`aish` has a `.bashrc` like feature called `.aishrc`.
+
+It must be placed as valid AiScript code directly under the user's home directory (such as `/home/user/.aishrc`).

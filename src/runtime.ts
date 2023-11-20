@@ -1,9 +1,13 @@
-import { Interpreter, Scope } from "npm:@syuilo/aiscript";
-import { reprValue } from "npm:@syuilo/aiscript/interpreter/util.js";
-import { Variable } from "npm:@syuilo/aiscript/interpreter/variable.js";
+import { Interpreter, Scope } from "@syuilo/aiscript/";
+import { reprValue } from "@syuilo/aiscript/interpreter/util.js";
+import { Variable } from "@syuilo/aiscript/interpreter/variable.js";
 import { ShellProxy } from "./shellProxy.ts";
+import { FakeModule } from "./lib/FakeModule.ts";
+import dir from "dir/mod.ts";
+import { join } from "path/join.ts";
+import { loadRcFile } from "./rcfile.ts";
 
-export function createRuntime(mode: "repl" | "normal") {
+export async function createRuntime(mode: "repl" | "normal", basePath: string) {
   const runtime = new Interpreter(
     {},
     {
@@ -29,7 +33,12 @@ export function createRuntime(mode: "repl" | "normal") {
     new ShellProxy().createProxy(),
   ]);
 
+  const fakeModule = new FakeModule(basePath, runtime);
+  fakeModule.installFakeModule(scope);
+
   runtime.scope = scope;
+
+  await loadRcFile(fakeModule);
 
   return runtime;
 }

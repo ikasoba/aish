@@ -1,5 +1,5 @@
 import { Command } from "command/mod.ts";
-import { utils, values } from "npm:@syuilo/aiscript";
+import { utils, values } from "@syuilo/aiscript/";
 import { ShellProxy } from "./shellProxy.ts";
 
 export interface CommandOption {

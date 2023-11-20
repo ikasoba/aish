@@ -1,4 +1,4 @@
-import { values } from "npm:@syuilo/aiscript";
+import { values } from "@syuilo/aiscript/";
 
 export interface MapProxyOption<K, V> {
   get?(key: K): V | undefined;

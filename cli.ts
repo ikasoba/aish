@@ -1,13 +1,14 @@
 import { Command } from "command/mod.ts";
 import { createRuntime } from "./src/runtime.ts";
-import { Parser } from "npm:@syuilo/aiscript";
+import { Parser } from "@syuilo/aiscript/";
+import { resolve } from "path/resolve.ts";
 
 const program = new Command()
   .name("aish")
   .version("0.1.0")
   .action(async () => {
     if (!Deno.isatty(Deno.stdin.rid)) {
-      const runtime = createRuntime("normal");
+      const runtime = await createRuntime("normal", Deno.cwd());
       const decoder = new TextDecoder();
       let src = "";
 
@@ -25,22 +26,16 @@ program
   .command("run", "execute script file.")
   .arguments("<path:string>")
   .action(async (_, path) => {
-    const runtime = createRuntime("normal");
+    const runtime = await createRuntime("normal", resolve(path));
     const src = await Deno.readTextFile(path);
 
     await runtime.exec(Parser.parse(src));
   });
 
 program.command("repl", "run repl.").action(async () => {
-  const runtime = createRuntime("repl");
+  const runtime = await createRuntime("repl", Deno.cwd());
   let code = "";
   let msg = ">";
-
-  console.log(
-    "# Welcome to aish!\n" +
-      "aiscript is available in this shell.\n" +
-      "You can also use `<: help` to display the URL of the official aiscript documentation.\n"
-  );
 
   while (true) {
     const line = prompt(msg);

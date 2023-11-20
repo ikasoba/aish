@@ -1,7 +1,7 @@
-import { values } from "npm:@syuilo/aiscript";
+import { values } from "@syuilo/aiscript/";
 import { MapProxy } from "./proxy.ts";
-import { reprValue } from "npm:@syuilo/aiscript/interpreter/util.js";
-import { Variable } from "npm:@syuilo/aiscript/interpreter/variable.js";
+import { reprValue } from "@syuilo/aiscript/interpreter/util.js";
+import { Variable } from "@syuilo/aiscript/interpreter/variable.js";
 import { createCommand } from "./command.ts";
 
 export class ShellProxy {
