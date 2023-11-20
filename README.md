@@ -26,7 +26,7 @@ $ aish repl
 # Installation
 
 ```sh
-deno install -A -n aish --import-map .https://esm.sh/gh/ikasoba/aish/import_map.json https://esm.sh/gh/ikasoba/aish/cli.ts
+deno install -A -n aish --import-map https://raw.githubusercontent.com/ikasoba/aish/main/import_map.json https://raw.githubusercontent.com/ikasoba/aish/main/cli.ts
 ```
 
 # About
