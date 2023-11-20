@@ -73,6 +73,10 @@ Module loading is performed according to the following rules
 
   Import from the same hierarchy as the running script file.
 
+Also, JavaScript can be loaded.
+
+### example
+
 ```js
 // ./hoge.is
 
@@ -85,8 +89,32 @@ return {
 }
 ```
 
+
+```js
+// ./hoge.js
+
+import { values, utils } from "@syuilo/aiscript/";
+
+export default () => (
+  values.OBJ(new Map([
+    ["add", values.FN_NATIVE(([x, y]) => {
+      utils.assertNumber(x);
+      utils.assertNumber(y);
+
+      return values.NUM(x.value + y.value);
+    })]
+  ]))
+)
+```
+
 ```js
 let Hoge = FakeModule:import("./hoge.is")
+
+<: Hoge.add(1, 2)
+
+// or
+
+let Hoge = FakeModule:import("./hoge.js")
 
 <: Hoge.add(1, 2)
 ```
