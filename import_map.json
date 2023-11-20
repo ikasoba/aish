@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@syuilo/aiscript/": "https://esm.sh/@syuilo/aiscript@0.16.0/",
+    "command/": "https://deno.land/x/cliffy@v1.0.0-rc.3/command/"
+  }
+}
